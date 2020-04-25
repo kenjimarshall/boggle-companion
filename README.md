@@ -1,1 +1,1 @@
-"# boggle-companion" 
+# boggle-companion
