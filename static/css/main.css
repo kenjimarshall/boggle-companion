@@ -1,0 +1,116 @@
+.container-fluid{
+    min-width: 375px ;
+    height: 100vh;
+}
+
+.core{
+    height: 60vh
+}
+
+.header{
+    background-color: white;
+    height: 20vh;
+}
+
+.letter{
+    height: 100%;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.letter-input{
+    height: 100%;
+    font-size: 12px;
+    padding-right: 6px;
+    padding-left: 6px;
+    text-align: center;
+}
+
+.home-title{
+    text-align: center;
+}
+
+
+.letter-row{
+    margin-bottom: 20px;    
+}
+
+.answers-sm{
+    display: none;
+}
+
+
+.buttons{
+    text-align: center;
+}
+
+.solve-btn{
+    font-size: 10pt;
+    margin-top: 10px;
+}
+
+.random-btn{
+    font-size: 10pt;
+    margin-top: 10px;
+}
+
+.boggle{
+    margin-bottom: 20px
+}
+
+.sol{
+    margin-bottom: 20px;
+}
+
+
+@media screen and (min-width: 600px){
+    .letter-input{
+        font-size: 14px;
+    }
+}
+
+@media screen and (min-width: 768px){
+    .answers-sm{
+        display:block;
+    }
+
+    .boggle{
+        margin-bottom: 0px;
+    }
+
+    .buttons{
+        margin-top: 20px;
+    }  
+
+    .solve-btn{
+        float: right;
+        margin-top: 0;
+    }
+
+    .random-btn{
+        float: right;
+        margin-right: 10px;
+        margin-top: 0;
+    }
+
+    .letter-input{
+        padding: 6px 12px;
+        /* font-size: 14px; */
+    }
+
+    .letter{
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+}
+
+@media screen and (min-width: 992px){
+
+}
+
+@media screen and (min-width: 1200px){
+
+}
+
+
+

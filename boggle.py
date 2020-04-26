@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-"""boggle companion
+"""
+Boggle solver.
 
 Tool to find solutions to a Boggle board and query valid words. Uses NASPA Word List 2018.
 
@@ -62,9 +63,7 @@ class Boggle():
 
         if len(symbols) != size * size:
             raise ValueError(
-                f"Symbols do not match board size. For size {size}, \
-                    should have {size * size} symbols.\n \
-                    Received {len(symbols)}: {symbols}.")
+                f"Symbols do not match board size. For size {size}, should have {size * size} symbols.\nReceived {len(symbols)}: {symbols}.")
 
         self.size = size
         self.adj_list = []
@@ -180,7 +179,10 @@ class Boggle():
             self.extend_and_check_words(node.symbol, [node], valid_words)
 
         for key, val in valid_words.items():
-            print(key + " LETTERS: ", sorted(val))
+            valid_words[key] = sorted(list(val))
+            # convert from sets to sorted lists
+
+        return valid_words
 
     def extend_and_check_words(self, word_to_extend, node_list, valid_words):
         """
@@ -199,7 +201,7 @@ class Boggle():
         good_starter = True
         # set to false if we have a three-letter word that doesn't prefix any valid words
         if len(word_to_extend) == 3:
-            good_starter = word_to_extend in THREE_STARTERS
+            good_starter = word_to_extend[:3] in THREE_STARTERS
 
         if good_starter:
             if len(word_to_extend) >= 3:  # then we validate the word
@@ -425,4 +427,6 @@ if __name__ == "__main__":
         print(Boggle.word_validator(ARGS.val))
     if ARGS.syms:  # if -l was passed
         BOARD = Boggle(ARGS.syms)
-        BOARD.find_words()
+        valid_words = BOARD.find_words()
+        for key, val in valid_words.items():
+            print(key + " LETTERS: ", sorted(val))
