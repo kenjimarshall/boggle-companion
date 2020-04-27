@@ -20,12 +20,12 @@ def update_board(new_board):
     BOARD = new_board
 
 
-@app.route('/boggle-companion')
+@app.route('/')
 def index():
     return render_template('index.html', data=BOARD)
 
 
-@app.route('/boggle-companion', methods=['POST'])
+@app.route('/', methods=['POST'])
 def solve_board():
     if not request.json or not 'size' in request.json or not 'symbols' in request.json:
         abort(400)
