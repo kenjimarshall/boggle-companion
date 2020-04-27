@@ -128,7 +128,7 @@ Boggle Companion
                     symbols: symbols
                 }
 
-                fetch(`${window.origin}/boggle-companion`, {
+                fetch(`${window.origin}/`, {
                     method: "POST",
                     body: JSON.stringify(msg),
                     cache: "no-cache",
@@ -137,7 +137,6 @@ Boggle Companion
                     })
                 })
                     .then(function (response) {
-
                         response.json().then(function (data) {
 
                             var keys = Object.keys(data.solution)
