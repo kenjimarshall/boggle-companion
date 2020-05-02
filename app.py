@@ -32,10 +32,7 @@ def solve_board():
 
     symbols = request.json['symbols']
     size = request.json['size']
-    try:
-        board_obj = boggle.Boggle(symbols, size)
-    except (ValueError, TypeError) as err:
-        return jsonify({'err': str(err)})
+    board_obj = boggle.Boggle(symbols, size)
 
     solution = board_obj.find_words()
     usage_count = []

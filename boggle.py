@@ -20,7 +20,7 @@ Attributes:
 import argparse
 
 
-with open('nwl2018.txt') as f:  # NASPA Word List 2018
+with open('static/nwl2018.txt') as f:  # NASPA Word List 2018
     WORDS = set()
     THREE_STARTERS = set()  # hashing to optimize 'contains' operations
     for line in f.readlines():
@@ -43,24 +43,12 @@ class Boggle():
                 If size = 4, then 16 symbols must be passed]
             size (int, optional): [Boggle board is {size} x {size} grid]. Defaults to 4.
 
-         Raises:
-            TypeError: [Symbols is not iterable]
-            ValueError: [Size is not an integer.]
-            ValueError: [Number of symbols passed does not match board size.]
+        Raises:
+            ValueError: [number of symbols does not match board size]
         """
 
-        try:
-            symbols = [str(sym).strip().lower() for sym in symbols]
-        except TypeError:
-            raise TypeError(
-                f"Failed to parse symbols in Boggle constructor. {symbols} was not iterable")
-
-        try:
-            size = int(size)
-        except ValueError:
-            raise ValueError(
-                f"Error in instantiating Boggle object. {size} could not be cast to int.")
-
+        symbols = [str(sym).strip().lower() for sym in symbols]
+        size = int(size)
         if len(symbols) != size * size:
             raise ValueError(
                 f"Symbols do not match board size. For size {size}, should have {size * size} symbols.\nReceived {len(symbols)}: {symbols}.")
@@ -87,12 +75,6 @@ class Boggle():
 
     @property
     def adj_list(self):
-        """
-        [Adjacency list representation for Boggle board graph]
-
-        Returns:
-            [Node]: [List of Nodes on Boggle board.]
-        """
         return self._adj_list
 
     @adj_list.setter
@@ -105,28 +87,16 @@ class Boggle():
 
         Raises:
             ValueError: [val does not contain only Node instances]
-            TypeError: [val is not iterable]
         """
-        try:
 
-            if not all(isinstance(x, Node) for x in val):
-                raise ValueError(
-                    "Adjacency list in Boggle object must only contain Node instances")
+        if not all(isinstance(x, Node) for x in val):
+            raise ValueError(
+                "Adjacency list in Boggle object must only contain Node instances")
 
-            self._adj_list = val
-
-        except TypeError as t_err:
-            raise TypeError(
-                f"Failed to initialize Boggle adjacency list. {val} not iterable.")
+        self._adj_list = val
 
     @property
     def size(self):
-        """
-        [Size of Boggle board.]
-
-        Returns:
-            int: [Size of Boggle board.]
-        """
         return self._size
 
     @size.setter
@@ -138,17 +108,10 @@ class Boggle():
             val (int): [Size of Boggle board]
 
         Raises:
-            ValueError: [val cannot be converted to int.]
             ValueError: [val isn't a positive integer.]
         """
-        try:
 
-            val = int(val)
-
-        except ValueError:
-            raise ValueError(
-                f"Boggle board size {val} failed to be cast to an integer.")
-
+        val = int(val)
         if val <= 0:
             raise ValueError(f"Size of Boggle board must be > 0. Got {val}.")
 
@@ -201,7 +164,7 @@ class Boggle():
         good_starter = True
         # set to false if we have a three-letter word that doesn't prefix any valid words
         if len(word_to_extend) == 3:
-            good_starter = word_to_extend[:3] in THREE_STARTERS
+            good_starter = word_to_extend in THREE_STARTERS
 
         if good_starter:
             if len(word_to_extend) >= 3:  # then we validate the word
@@ -224,7 +187,7 @@ class Boggle():
             for col in range(self.size):
                 sym = self._adj_list[row * self.size +
                                      col].symbol  # add symbol to string
-                # ensure each symbol starts five characters over from the previous one
+                # ensure each symbol starts five characters over from the previous one's start
                 rep += sym + " "*(5 - len(sym))
             rep += "\n"
         return rep
@@ -254,12 +217,6 @@ class Node():
 
     @property
     def x_position(self):
-        """
-        [X-coordinate on Boggle board.]
-
-        Returns:
-            int: [X-coordinate on Boggle board.]
-        """
         return self._x_position
 
     @x_position.setter
@@ -271,16 +228,10 @@ class Node():
             val (int): [New x-coordinate of Node.]
 
         Raises:
-            ValueError: [Failed to cast val to an int.]
             ValueError: [Val is negative.]
         """
 
-        try:
-            val = int(val)
-        except ValueError:
-            raise ValueError(
-                f"Failed to set x-coordinate of Node. {val} could not be cast to int.")
-
+        val = int(val)
         if val < 0:
             raise ValueError(f"X-coordinate of Node must be >= 0. Got {val}")
 
@@ -288,13 +239,6 @@ class Node():
 
     @property
     def y_position(self):
-        """
-        [Y-coordinate on Boggle board.]
-
-        Returns:
-            int: [Y-coordinate on Boggle board.]
-        """
-
         return self._y_position
 
     @y_position.setter
@@ -306,16 +250,10 @@ class Node():
             val (int): [New y-coordinate of Node.]
 
         Raises:
-            ValueError: [Failed to cast val to an int.]
             ValueError: [Val is negative.]
         """
 
-        try:
-            val = int(val)
-        except ValueError:
-            raise ValueError(
-                f"Failed to set y-coordinate of Node. {val} could not be cast to int.")
-
+        val = int(val)
         if val < 0:
             raise ValueError(f"Y-coordinate of Node must be >= 0. Got {val}")
 
@@ -323,13 +261,6 @@ class Node():
 
     @property
     def edges(self):
-        """
-        [Nodes immediately adjacent or diagonal to this Node.
-            Their x- and y- coordinates differ by <= 1.]
-
-        Returns:
-            [Node]: [Nodes immediately adjacent or diagonal to this Node.]
-        """
         return self._edges
 
     @edges.setter
@@ -342,26 +273,15 @@ class Node():
 
         Raises:
             ValueError: [Not all elements in val are of type Node]
-            TypeError: [val is not iterable]
         """
-        try:
-            if not all(isinstance(x, Node) for x in val):
-                raise ValueError(f"Failed to update edges of Node. Not all elements in {val} \
-                    were of class Node.")
-        except TypeError:
-            raise TypeError(
-                f"Failed to update edges of Node. {val} not iterable.")
+        if not all(isinstance(x, Node) for x in val):
+            raise ValueError(f"Failed to update edges of Node. Not all elements in {val} \
+                were of class Node.")
 
         self._edges = val
 
     @property
     def symbol(self):
-        """
-        [Symbol this Node represents.]
-
-        Returns:
-            str: [Symbol this Node represents.]
-        """
         return self._symbol
 
     @symbol.setter
@@ -370,22 +290,12 @@ class Node():
 
     @property
     def usage_count(self):
-        """
-        [How many times this node is used in a valid word.]
-
-        Returns:
-            int: [How many times this node is used in a valid word.]
-        """
         return self._usage_count
 
     @usage_count.setter
     def usage_count(self, val):
 
-        try:
-            val = int(val)
-        except ValueError:
-            raise ValueError(
-                f"Error in setting usage count. {val} failed to be cast to int.")
+        val = int(val)
         if val < 0:
             raise ValueError(
                 f"Error in setting usage count. Val must not be negative. Got {val}.")

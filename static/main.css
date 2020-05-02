@@ -20,7 +20,7 @@
 
 .letter-input{
     height: 100%;
-    font-size: 12px;
+    font-size: 16px;
     padding-right: 6px;
     padding-left: 6px;
     text-align: center;
@@ -65,7 +65,7 @@
 
 @media screen and (min-width: 600px){
     .letter-input{
-        font-size: 14px;
+        font-size: 18px;
     }
 }
 
@@ -95,7 +95,7 @@
 
     .letter-input{
         padding: 6px 12px;
-        /* font-size: 14px; */
+        font-size: 20px;
     }
 
     .letter{
